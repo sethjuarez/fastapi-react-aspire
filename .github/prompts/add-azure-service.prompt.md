@@ -18,7 +18,7 @@ Integrate {{service}} into the Aspire-orchestrated application.
 Add the NuGet package directive and resource definition:
 
 ```csharp
-#:package Aspire.Hosting.Azure.{{Service}}@13.1.0
+#:package Aspire.Hosting.Azure.{{Service}}@13.4.3
 
 // Add the resource
 var {{resource}} = builder.AddAzure{{Service}}("{{resource}}");

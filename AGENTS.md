@@ -106,7 +106,7 @@ To add Azure Cosmos DB for data persistence:
 1. **Update `apphost.cs`**:
 
 ```csharp
-#:package Aspire.Hosting.Azure.CosmosDB@13.1.0
+#:package Aspire.Hosting.Azure.CosmosDB@13.4.3
 
 // Add after builder creation
 var cosmos = builder.AddAzureCosmosDB("cosmos");
@@ -159,7 +159,7 @@ To add Azure Blob Storage for file uploads:
 1. **Update `apphost.cs`**:
 
 ```csharp
-#:package Aspire.Hosting.Azure.Storage@13.1.0
+#:package Aspire.Hosting.Azure.Storage@13.4.3
 
 var storage = builder.AddAzureStorage("storage");
 var blobs = storage.AddBlobContainer("uploads");

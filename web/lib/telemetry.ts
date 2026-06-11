@@ -67,6 +67,7 @@ export function initTelemetry(config: TelemetryConfig): void {
   // Add OTLP exporter for Aspire dashboard
   if (otlpHttpEndpoint) {
     const headers: Record<string, string> = {};
+    const url = new URL(otlpHttpEndpoint, window.location.origin).toString();
 
     // Parse OTLP headers (format: "key1=value1,key2=value2")
     if (otlpHeaders) {
@@ -79,7 +80,7 @@ export function initTelemetry(config: TelemetryConfig): void {
     }
 
     const otlpExporter = new OTLPTraceExporter({
-      url: otlpHttpEndpoint,
+      url,
       headers,
     });
 

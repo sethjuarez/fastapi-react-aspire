@@ -9,6 +9,11 @@ const buildVersion =
   process.env.BUILD_VERSION ||
   `dev-${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}`;
 
+const otlpEndpoint =
+  process.env.OTEL_EXPORTER_OTLP_HTTP_ENDPOINT ||
+  process.env.ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL ||
+  process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
+
 export default defineConfig({
   define: {
     __BUILD_VERSION__: JSON.stringify(buildVersion),
@@ -24,6 +29,16 @@ export default defineConfig({
         secure: false,
         ws: true, // Enable WebSocket proxying
       },
+      ...(otlpEndpoint
+        ? {
+            "/otlp": {
+              target: otlpEndpoint,
+              changeOrigin: true,
+              secure: false,
+              rewrite: (path) => path.replace(/^\/otlp/, ""),
+            },
+          }
+        : {}),
     },
   },
 });
