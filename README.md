@@ -193,13 +193,76 @@ The template includes a deployment workflow (`.github/workflows/deploy.yml`) tha
 The script automatically derives resource names from the app name:
 
 - **Resource Group**: `<app-name>-rg`
-- **App Registration**: `<app-name>-deploy`
+- **Deploy App Registration**: `<app-name>-deploy`
 
 This script will:
 
-1. Create an Azure AD app registration with federated credentials
-2. Create a service principal with Contributor role
-3. Configure all required GitHub repository secrets
+1. Create a Microsoft Entra app registration for GitHub Actions deployment
+2. Create a federated credential for the `main` branch
+3. Create a service principal with Contributor role on the target resource group
+4. Configure all required GitHub repository secrets
+
+The deployment app registration is only used by GitHub Actions and Aspire. It is
+not the user-facing sign-in app for your web application.
+
+### App registrations for deployment and authentication
+
+Most deployed applications need one app registration for deployment. Applications
+that also use browser sign-in and API bearer tokens usually need a second app
+registration for runtime authentication.
+
+| App registration | Created by | Purpose | Secret needed? |
+| ---------------- | ---------- | ------- | -------------- |
+| `<app-name>-deploy` | `setup-azure.*` | GitHub Actions OIDC identity used by `azure/login` and `aspire deploy` | No |
+| `<app-name>` | Manual, when adding auth | Runtime Microsoft Entra app used by the browser and API token validation | Usually no for SPA-only auth |
+
+The deployment app registration is wired to GitHub Actions through a federated
+credential:
+
+```text
+repo:<owner>/<repo>:ref:refs/heads/main
+```
+
+The workflow logs in with:
+
+```yaml
+client-id: ${{ secrets.AZURE_CLIENT_ID }}
+tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+```
+
+Then `aspire deploy` reads the Azure target from environment variables:
+
+```yaml
+Azure__TenantId: ${{ secrets.AZURE_TENANT_ID }}
+Azure__SubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+Azure__Location: ${{ secrets.AZURE_LOCATION }}
+Azure__ResourceGroup: ${{ secrets.AZURE_RESOURCE_GROUP }}
+Azure__AllowResourceGroupCreation: false
+```
+
+If your app adds browser Microsoft Entra auth, create a separate runtime app
+registration named `<app-name>` and configure it as both the SPA public client
+and protected API resource:
+
+| Step | Runtime auth setup |
+| ---- | ------------------ |
+| 1 | Create a single-tenant app registration named `<app-name>` |
+| 2 | Add a SPA platform redirect URI for the deployed web app, such as `https://<web-host>/login` or your MSAL callback route |
+| 3 | Set the Application ID URI to `api://<runtime-client-id>` |
+| 4 | Expose a delegated scope named `user_impersonation` |
+| 5 | Store runtime values as GitHub variables/secrets, for example `<APP_NAME>_MSAL_CLIENT_ID`, `<APP_NAME>_MSAL_TENANT_ID`, `<APP_NAME>_MSAL_API_SCOPE`, and `<APP_NAME>_MSAL_REDIRECT_URI` |
+| 6 | Pass those values into `aspire deploy` using app-specific configuration keys, then map them to web/API environment variables in `apphost.cs` |
+
+This keeps deployment permissions separate from user sign-in and API access
+tokens. The browser should request a token for:
+
+```text
+api://<runtime-client-id>/user_impersonation
+```
+
+The API should validate that token's tenant, issuer, audience, expiration, and
+required `user_impersonation` scope.
 
 **Prerequisites for setup script:**
 
