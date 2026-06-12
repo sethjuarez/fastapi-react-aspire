@@ -84,9 +84,6 @@ dmypy.json
 # ruff
 .ruff_cache/
 
-# uv
-uv.lock
-
 # Node.js
 node_modules/
 npm-debug.log*

@@ -87,7 +87,7 @@ fastapi-react-aspire/
 │   │           └── routes.py
 │   ├── tests/
 │   ├── pyproject.toml
-│   └── Dockerfile
+│   └── uv.lock
 ├── web/                    # React frontend
 │   ├── app/
 │   │   ├── root.tsx        # Root layout + telemetry
@@ -108,6 +108,18 @@ fastapi-react-aspire/
     ├── copilot-instructions.md
     └── prompts/            # Copilot prompt files
 ```
+
+### AI and Copilot files
+
+This template includes a few files that help AI coding tools work consistently with the project:
+
+| File | Purpose |
+| ---- | ------- |
+| `AGENTS.md` | Repository guide for coding agents. It summarizes architecture, common commands, testing expectations, and how to extend the template. |
+| `.github/copilot-instructions.md` | GitHub Copilot repository instructions. Copilot uses this for code style, project conventions, and implementation patterns. |
+| `.github/prompts/*.prompt.md` | Reusable prompts for common tasks, such as adding an API module, adding a React page, debugging Aspire, or adding tracing/tests. |
+
+You do not need to edit these files to run the app. They are included so Copilot, agentic coding tools, and future contributors can follow the same conventions.
 
 ## 🛠️ Development
 
@@ -165,8 +177,8 @@ aspire deploy
 
 This will:
 
-1. Build Docker images for both API and Web
-2. Push to Azure Container Registry
+1. Publish the FastAPI API through Aspire's Python hosting integration
+2. Build and publish the React web container
 3. Deploy to Azure Container Apps
 4. Configure environment variables and networking
 
@@ -313,12 +325,9 @@ az role assignment create \
 - Push to `main` branch (auto-deploys on changes to api/, web/, apphost.cs)
 - Manual trigger via GitHub Actions UI
 
-### Manual Docker Build
+### Manual Web Docker Build
 
 ```bash
-# Build API
-docker build -t my-api ./api
-
 # Build Web with version
 docker build --build-arg BUILD_VERSION=$(git rev-parse --short HEAD) -t my-web ./web
 ```
