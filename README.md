@@ -4,22 +4,22 @@ A minimal, production-ready starter template featuring **FastAPI** backend with 
 
 ![CI](https://github.com/sethjuarez/fastapi-react-aspire/actions/workflows/ci.yml/badge.svg)
 
-## ✨ Features
+## Features
 
-- **FastAPI Backend** — Python 3.13, async support, automatic API docs, Pydantic validation
-- **OpenTelemetry Tracing** — Distributed tracing across frontend and backend, visible in Aspire dashboard
-- **React Router v7** — Modern React with SSR, file-based routing, TypeScript
-- **Tailwind CSS** — Utility-first CSS with dark mode support
-- **Vite** — Fast dev server with HMR and optimized production builds
-- **.NET Aspire** — Local orchestration with dashboard, environment management, and Azure deployment
-- **GitHub Actions** — CI workflow for testing, linting, and Docker builds
+- **FastAPI Backend** - Python 3.13, async support, automatic API docs, Pydantic validation
+- **OpenTelemetry Tracing** - Distributed tracing across frontend and backend, visible in Aspire dashboard
+- **React Router v7** - Modern React with SSR, file-based routing, TypeScript
+- **Tailwind CSS** - Utility-first CSS with dark mode support
+- **Vite** - Fast dev server with HMR and optimized production builds
+- **.NET Aspire** - Local orchestration with dashboard, environment management, and Azure deployment
+- **GitHub Actions** - CI workflow for testing, linting, and Docker builds
 
-## 📋 Prerequisites
+## Prerequisites
 
 - [.NET SDK 10.0+](https://dotnet.microsoft.com/download)
 - [Node.js 22+](https://nodejs.org/)
 - [Python 3.13+](https://www.python.org/)
-- [uv](https://docs.astral.sh/uv/getting-started/installation/) — Fast Python package manager
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) - Fast Python package manager
 - [Aspire CLI](https://aspire.dev/get-started/install-cli/)
 
 ```bash
@@ -28,7 +28,7 @@ curl -sSL https://aspire.dev/install.sh | bash    # Linux/macOS
 irm https://aspire.dev/install.ps1 | iex          # Windows PowerShell
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone the template
@@ -68,45 +68,45 @@ This will:
 - **API Docs**: <http://localhost:8000/docs>
 - **Aspire Dashboard**: <http://localhost:15888>
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 fastapi-react-aspire/
-├── apphost.cs              # Aspire orchestration
-├── api/                    # FastAPI backend
-│   ├── app/
-│   │   ├── main.py         # FastAPI entry point
-│   │   ├── telemetry.py    # OpenTelemetry setup
-│   │   ├── common/         # Shared utilities
-│   │   │   ├── settings.py # Pydantic configuration
-│   │   │   └── tracer.py   # @trace decorator
-│   │   └── modules/
-│   │       └── items/      # Example CRUD module
-│   │           ├── schemas.py
-│   │           ├── service.py
-│   │           └── routes.py
-│   ├── tests/
-│   ├── pyproject.toml
-│   └── uv.lock
-├── web/                    # React frontend
-│   ├── app/
-│   │   ├── root.tsx        # Root layout + telemetry
-│   │   ├── routes.ts       # Route definitions
-│   │   └── routes/
-│   │       ├── home.tsx    # Landing page
-│   │       └── items.tsx   # API demo page
-│   ├── lib/
-│   │   └── telemetry.ts    # Browser OpenTelemetry
-│   ├── vite.config.ts      # Vite + proxy config
-│   ├── server.js           # Production server
-│   ├── package.json
-│   └── Dockerfile
-└── .github/
-    ├── workflows/
-    │   ├── ci.yml          # CI pipeline
-    │   └── deploy.yml      # Azure deployment
-    ├── copilot-instructions.md
-    └── prompts/            # Copilot prompt files
+|-- apphost.cs              # Aspire orchestration
+|-- api/                    # FastAPI backend
+|   |-- app/
+|   |   |-- main.py         # FastAPI entry point
+|   |   |-- telemetry.py    # OpenTelemetry setup
+|   |   |-- common/         # Shared utilities
+|   |   |   |-- settings.py # Pydantic configuration
+|   |   |   `-- tracer.py   # @trace decorator
+|   |   `-- modules/
+|   |       `-- items/      # Example CRUD module
+|   |           |-- schemas.py
+|   |           |-- service.py
+|   |           `-- routes.py
+|   |-- tests/
+|   |-- pyproject.toml
+|   `-- uv.lock
+|-- web/                    # React frontend
+|   |-- app/
+|   |   |-- root.tsx        # Root layout + telemetry
+|   |   |-- routes.ts       # Route definitions
+|   |   `-- routes/
+|   |       |-- home.tsx    # Landing page
+|   |       `-- items.tsx   # API demo page
+|   |-- lib/
+|   |   `-- telemetry.ts    # Browser OpenTelemetry
+|   |-- vite.config.ts      # Vite + proxy config
+|   |-- server.js           # Production server
+|   |-- package.json
+|   `-- Dockerfile
+`-- .github/
+    |-- workflows/
+    |   |-- ci.yml          # CI pipeline
+    |   `-- deploy.yml      # Azure deployment
+    |-- copilot-instructions.md
+    `-- prompts/            # Copilot prompt files
 ```
 
 ### AI and Copilot files
@@ -121,7 +121,7 @@ This template includes a few files that help AI coding tools work consistently w
 
 You do not need to edit these files to run the app. They are included so Copilot, agentic coding tools, and future contributors can follow the same conventions.
 
-## 🛠️ Development
+## Development
 
 ### Running Standalone
 
@@ -166,7 +166,7 @@ cd web
 npm run lint
 ```
 
-## 🚢 Deployment
+## Deployment
 
 ### Deploy to Azure (Local)
 
@@ -332,7 +332,7 @@ az role assignment create \
 docker build --build-arg BUILD_VERSION=$(git rev-parse --short HEAD) -t my-web ./web
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -353,7 +353,7 @@ See [AGENTS.md](AGENTS.md) for instructions on adding:
 - Azure Blob Storage
 - Azure AI Foundry
 
-## � Documentation
+## Documentation
 
 | Document                                                      | Purpose                                  | Audience                                             |
 | ------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
@@ -361,7 +361,7 @@ See [AGENTS.md](AGENTS.md) for instructions on adding:
 | [AGENTS.md](AGENTS.md) | Extension guide, common tasks, troubleshooting | AI agents and developers extending the template |
 | [.github/copilot-instructions.md](.github/copilot-instructions.md) | Coding standards and conventions | AI coding assistants |
 
-## �📚 Learn More
+## Learn More
 
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
 - [React Router v7](https://reactrouter.com/)
@@ -369,6 +369,6 @@ See [AGENTS.md](AGENTS.md) for instructions on adding:
 - [OpenTelemetry](https://opentelemetry.io/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
-## 📄 License
+## License
 
 MIT
